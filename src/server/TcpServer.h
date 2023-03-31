@@ -18,7 +18,7 @@ public:
     _io_context(io_context),
     _endpoint(boost::asio::ip::tcp::v4(), port),
     _acceptor(io_context, _endpoint) {
-        start_accept();
+        startAccept();
         BOOST_LOG_TRIVIAL(info) << "Waiting for connection";
     }
 
@@ -27,10 +27,10 @@ private:
     boost::asio::ip::tcp::endpoint _endpoint;
     boost::asio::ip::tcp::acceptor _acceptor;
 
-    void start_accept();
+    void startAccept();
 
-    void handle_accept(boost::shared_ptr<TcpConnection> new_connection,
-                       const boost::system::error_code& error);
+    void handleAccept(boost::shared_ptr<TcpConnection> new_connection,
+                      const boost::system::error_code& error);
 
 };
 

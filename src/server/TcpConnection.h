@@ -35,13 +35,13 @@ private:
     static const int MAX_COMMAND_LENGTH = 1000;
     char command_data[MAX_COMMAND_LENGTH];
 
-    static void handle_write(const boost::system::error_code& error,
-                      size_t bytes_transferred);
-
-
-    void read_command();
-    void on_command_handler(const boost::system::error_code& error,
+    static void handleWrite(const boost::system::error_code& error,
                             size_t bytes_transferred);
+
+
+    void readCommand();
+    void onCommandHandler(const boost::system::error_code& error,
+                          size_t bytes_transferred);
 //    void sendResult();
 };
 
