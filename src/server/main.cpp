@@ -4,13 +4,16 @@
 
 #include <iostream>
 #include <boost/program_options.hpp>
+#include <boost/asio.hpp>
+#include "TcpServer.h"
 
 int main(int argc, char *argv[]) {
 
     boost::program_options::options_description desc("Allowed options");
     desc.add_options()
             ("help", "Produce help message")
-            ("max-clients", boost::program_options::value<int>(), "Set maximum allowed clients number")
+            ("max-clients", boost::program_options::value<int>()->default_value(1), "Set maximum allowed clients number")
+            ("port", boost::program_options::value<int>()->default_value(31415), "Port to listen")
             ;
 
     boost::program_options::variables_map vm;
@@ -22,4 +25,10 @@ int main(int argc, char *argv[]) {
         std::cout << desc << std::endl;
         return 0;
     }
+
+    auto port = vm["port"].as<int>();
+    boost::asio::io_context io_context;
+    TcpServer server(io_context, port);
+    io_context.run();
+
 }
