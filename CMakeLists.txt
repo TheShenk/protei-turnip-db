@@ -3,7 +3,7 @@ project(protei-turnip-db)
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(Boost 1.67 REQUIRED system program_options)
+find_package(Boost 1.67 REQUIRED system program_options log)
 if(Boost_FOUND)
     add_subdirectory(src/server)
 endif()

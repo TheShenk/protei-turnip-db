@@ -5,9 +5,11 @@
 #ifndef PROTEI_TURNIP_DB_TCPSERVER_H
 #define PROTEI_TURNIP_DB_TCPSERVER_H
 
-
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/log/trivial.hpp>
+
 #include "TcpConnection.h"
 
 class TcpServer {
@@ -17,6 +19,7 @@ public:
     _endpoint(boost::asio::ip::tcp::v4(), port),
     _acceptor(io_context, _endpoint) {
         start_accept();
+        BOOST_LOG_TRIVIAL(info) << "Waiting for connection";
     }
 
 private:
@@ -26,7 +29,7 @@ private:
 
     void start_accept();
 
-    void handle_accept(std::shared_ptr<TcpConnection> new_connection,
+    void handle_accept(boost::shared_ptr<TcpConnection> new_connection,
                        const boost::system::error_code& error);
 
 };
