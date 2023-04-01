@@ -10,6 +10,8 @@ std::string DataBase::runCommand(Command &command) {
         switch (command.getType()) {
             case CommandType::PUT:
                 return put(arguments[0], arguments[1]);
+            case CommandType::GET:
+                return get(arguments[0]);
         }
     } else {
         return "Unknown command";
@@ -29,5 +31,16 @@ std::string DataBase::put(std::string key, std::string value) {
         return "OK " + previous_value;
     } else {
         return "OK";
+    }
+}
+
+std::string DataBase::get(std::string key) {
+
+    _data_base_t::const_accessor accessor;
+    auto key_exist = _data.find(accessor, key);
+    if (key_exist) {
+        return "OK " + accessor->second;
+    } else {
+        return "NE";
     }
 }

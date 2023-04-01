@@ -14,6 +14,9 @@ public:
 
     std::string runCommand(Command &command);
     std::string put(std::string key, std::string value);
+    std::string get(std::string key);
+    std::string remove(std::string key);
+    std::string count();
 
 private:
 
