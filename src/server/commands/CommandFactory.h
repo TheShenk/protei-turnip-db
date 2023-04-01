@@ -17,6 +17,7 @@
 #include "Command.h"
 #include "GetCommand.h"
 #include "PutCommand.h"
+#include "DeleteCommand.h"
 
 class CommandFactory {
 
@@ -32,7 +33,7 @@ public:
             } else if (command_parts[0] == "GET" && command_parts.size() == 2) {
                 return std::make_unique<GetCommand>(command_parts[1]);
             } else if (command_parts[0] == "DEL" && command_parts.size() == 2) {
-//                return std::make_unique<DeleteCommand>(command_parts[1])
+                return std::make_unique<DeleteCommand>(command_parts[1]);
             } else if (command_parts[0] == "COUNT" && command_parts.size() == 1) {
 //                return std::make_unique<CountCommand>()
             }
