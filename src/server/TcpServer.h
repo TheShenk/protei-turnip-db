@@ -11,13 +11,15 @@
 #include <boost/log/trivial.hpp>
 
 #include "TcpConnection.h"
+#include "DataBase.h"
 
 class TcpServer {
 public:
     TcpServer(boost::asio::io_context& io_context, int port):
     _io_context(io_context),
     _endpoint(boost::asio::ip::tcp::v4(), port),
-    _acceptor(io_context, _endpoint) {
+    _acceptor(io_context, _endpoint),
+    _data_base() {
         startAccept();
         BOOST_LOG_TRIVIAL(info) << "Waiting for connection";
     }
@@ -26,6 +28,7 @@ private:
     boost::asio::io_context &_io_context;
     boost::asio::ip::tcp::endpoint _endpoint;
     boost::asio::ip::tcp::acceptor _acceptor;
+    DataBase _data_base;
 
     void startAccept();
 

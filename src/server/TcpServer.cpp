@@ -5,7 +5,7 @@
 #include "TcpServer.h"
 
 void TcpServer::startAccept() {
-    auto connection = boost::make_shared<TcpConnection>(_io_context);
+    auto connection = boost::make_shared<TcpConnection>(_io_context, _data_base);
     _acceptor.async_accept(connection->socket(), [this, connection](const boost::system::error_code& error) {
         handleAccept(connection, error);
     });

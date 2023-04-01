@@ -15,12 +15,14 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/log/trivial.hpp>
 #include <iostream>
+#include "DataBase.h"
 
 class TcpConnection: public boost::enable_shared_from_this<TcpConnection> {
 
 public:
-    TcpConnection(boost::asio::io_context& io_context):
-    _socket(io_context) {}
+    TcpConnection(boost::asio::io_context& io_context, DataBase &data_base):
+    _socket(io_context),
+    _data_base(data_base) {}
 
     ~TcpConnection() {
         BOOST_LOG_TRIVIAL(debug) << "~TcpConnection()";
@@ -32,15 +34,21 @@ public:
 
 private:
     boost::asio::ip::tcp::socket _socket;
+    DataBase &_data_base;
+
     static const int MAX_COMMAND_LENGTH = 1000;
-    char command_data[MAX_COMMAND_LENGTH];
+    char command_data[MAX_COMMAND_LENGTH]{0,};
 
     static void handleWrite(const boost::system::error_code& error,
                             size_t bytes_transferred);
 
 
     void readCommand();
+    void writeResult(std::string result);
+
     void onCommandHandler(const boost::system::error_code& error,
+                          size_t bytes_transferred);
+    void onResultHandler(const boost::system::error_code& error,
                           size_t bytes_transferred);
 //    void sendResult();
 };

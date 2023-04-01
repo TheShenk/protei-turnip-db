@@ -8,5 +8,5 @@ add_executable(turnip-server
         TcpServer.h
         TcpServer.cpp
         TcpConnection.cpp
-        TcpConnection.h Command.cpp Command.h)
-target_link_libraries(turnip-server ${Boost_LIBRARIES})
+        TcpConnection.h Command.cpp Command.h DataBase.cpp DataBase.h)
+target_link_libraries(turnip-server ${Boost_LIBRARIES} TBB::tbb)
