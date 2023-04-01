@@ -13,10 +13,12 @@ class DataBase {
 public:
 
     std::string runCommand(Command &command);
+    std::string put(std::string key, std::string value);
 
 private:
 
-    tbb::concurrent_hash_map<std::string, std::string> _data;
+    using _data_base_t = tbb::concurrent_hash_map<std::string, std::string>;
+    _data_base_t _data;
 
 };
 

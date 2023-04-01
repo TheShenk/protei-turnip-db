@@ -37,6 +37,7 @@ void TcpConnection::onCommandHandler(const boost::system::error_code &error, siz
         BOOST_LOG_TRIVIAL(debug) << "Received new command - " << command_data;
         Command command(command_data);
         auto result = _data_base.runCommand(command);
+        result += "\n";
         writeResult(result);
         readCommand();
     } else {

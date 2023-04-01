@@ -5,8 +5,10 @@
 #include "Command.h"
 
 Command::Command(std::string command_data) {
+
+    boost::trim(command_data);
     std::vector<std::string> command_parts;
-    boost::split(command_parts, command_data, boost::is_any_of(" "));
+    boost::split(command_parts, command_data, boost::is_any_of(" "), boost::token_compress_on);
 
     type = INVALID;
     if (command_parts.size() > 1) {
