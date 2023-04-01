@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(turnip-server
         main.cpp
-        TcpServer.h
-        TcpServer.cpp
-        TcpConnection.cpp
-        TcpConnection.h Command.cpp Command.h DataBase.cpp DataBase.h)
+        TcpServer.h TcpServer.cpp
+        TcpConnection.h TcpConnection.cpp
+        DataBase.h DataBase.cpp
+        commands/Command.h
+        commands/PutCommand.h commands/GetCommand.h commands/CommandFactory.h)
 target_link_libraries(turnip-server ${Boost_LIBRARIES} TBB::tbb)

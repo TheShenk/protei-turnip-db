@@ -5,23 +5,17 @@
 #ifndef PROTEI_TURNIP_DB_DATABASE_H
 #define PROTEI_TURNIP_DB_DATABASE_H
 
-#include <tbb/concurrent_hash_map.h>
-#include "Command.h"
+#include "commands/Command.h"
 
 class DataBase {
 
 public:
 
-    std::string runCommand(Command &command);
-    std::string put(std::string key, std::string value);
-    std::string get(std::string key);
-    std::string remove(std::string key);
-    std::string count();
+    std::string runCommand(std::unique_ptr<Command> command);
 
 private:
 
-    using _data_base_t = tbb::concurrent_hash_map<std::string, std::string>;
-    _data_base_t _data;
+    hash_map_t _data;
 
 };
 
