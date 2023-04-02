@@ -9,5 +9,5 @@ add_executable(turnip-server
         TcpConnection.h TcpConnection.cpp
         DataBase.h DataBase.cpp
         commands/Command.h
-        commands/PutCommand.h commands/GetCommand.h commands/CommandFactory.h commands/DeleteCommand.h commands/CountCommand.h)
+        commands/PutCommand.h commands/GetCommand.h commands/CommandFactory.h commands/DeleteCommand.h commands/CountCommand.h commands/DumpCommand.h)
 target_link_libraries(turnip-server ${Boost_LIBRARIES} TBB::tbb)

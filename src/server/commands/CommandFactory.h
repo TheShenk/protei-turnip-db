@@ -12,6 +12,7 @@
 
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string.hpp>
 #include <optional>
 
 #include "Command.h"
@@ -19,6 +20,7 @@
 #include "PutCommand.h"
 #include "DeleteCommand.h"
 #include "CountCommand.h"
+#include "DumpCommand.h"
 
 class CommandFactory {
 
@@ -29,14 +31,17 @@ public:
         boost::split(command_parts, command_data, boost::is_any_of(" "), boost::token_compress_on);
 
         if (!command_parts.empty()) {
-            if (command_parts[0] == "PUT" && command_parts.size() == 3) {
+            boost::algorithm::to_lower(command_parts[0]);
+            if (command_parts[0] == "put" && command_parts.size() == 3) {
                 return std::make_unique<PutCommand>(command_parts[1], command_parts[2]);
-            } else if (command_parts[0] == "GET" && command_parts.size() == 2) {
+            } else if (command_parts[0] == "get" && command_parts.size() == 2) {
                 return std::make_unique<GetCommand>(command_parts[1]);
-            } else if (command_parts[0] == "DEL" && command_parts.size() == 2) {
+            } else if (command_parts[0] == "del" && command_parts.size() == 2) {
                 return std::make_unique<DeleteCommand>(command_parts[1]);
-            } else if (command_parts[0] == "COUNT" && command_parts.size() == 1) {
+            } else if (command_parts[0] == "count" && command_parts.size() == 1) {
                 return std::make_unique<CountCommand>();
+            } else if (command_parts[0] == "dump" && command_parts.size() == 2) {
+                return std::make_unique<DumpCommand>(command_parts[1]);
             }
         }
 
