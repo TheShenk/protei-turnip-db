@@ -17,11 +17,12 @@ public:
     std::string execute(hash_map_t &data_base) override {
         std::ofstream ofstream(_filename);
         if (!ofstream.is_open()) {
-            return "BF";
+            return "NF";
         }
         for (const auto &[key, value]: data_base) {
             ofstream << key << " " << value << std::endl;
         }
+        BOOST_LOG_TRIVIAL(info) << "Database dumped in file " << _filename;
         return "OK";
     }
 

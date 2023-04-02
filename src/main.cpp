@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
             ("max-clients", boost::program_options::value<int>()->default_value(1), "Set maximum allowed clients number")
             ("port", boost::program_options::value<int>()->default_value(31415), "Port to listen")
             ("threads", boost::program_options::value<int>()->default_value(4), "Threads count to use")
+            ("dump", boost::program_options::value<std::string>(), "Path to dump file to load")
             ;
 
     boost::program_options::variables_map vm;
@@ -30,9 +31,16 @@ int main(int argc, char *argv[]) {
     auto port = vm["port"].as<int>();
     auto threads_count = vm["threads"].as<int>();
 
+    DataBase data_base;
+    if (vm.count("dump")) {
+        auto filepath = vm["dump"].as<std::string>();
+        BOOST_LOG_TRIVIAL(info) << "Load dump from " << filepath;
+        data_base.load(filepath);
+    }
+
     boost::asio::thread_pool pool(threads_count);
     boost::asio::io_context io_context;
-    TcpServer server(io_context, port);
+    TcpServer server(io_context, port, data_base);
 
     for (int i=0; i<threads_count; i++) {
         boost::asio::post(pool, [&io_context](){io_context.run();});
