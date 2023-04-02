@@ -7,11 +7,13 @@
 
 #include "Command.h"
 
+#include <utility>
+
 class GetCommand: public Command {
 
 public:
 
-    explicit GetCommand(std::string key): _key(key) {}
+    explicit GetCommand(std::string key): _key(std::move(key)) {}
 
     std::string execute(hash_map_t &data) override {
 

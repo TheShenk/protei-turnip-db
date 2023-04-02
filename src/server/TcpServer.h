@@ -32,7 +32,7 @@ private:
 
     void startAccept();
 
-    void handleAccept(boost::shared_ptr<TcpConnection> new_connection,
+    void handleAccept(const boost::shared_ptr<TcpConnection>& new_connection,
                       const boost::system::error_code& error);
 
 };

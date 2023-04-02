@@ -7,11 +7,13 @@
 
 #include "Command.h"
 
+#include <utility>
+
 class PutCommand: public Command {
 
 public:
 
-    PutCommand(std::string key, std::string value): _key(key), _value(value) {}
+    PutCommand(std::string key, std::string value): _key(std::move(key)), _value(std::move(value)) {}
 
     std::string execute(hash_map_t &data_base) override {
         hash_map_t::accessor accessor;

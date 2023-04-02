@@ -7,11 +7,13 @@
 
 #include "Command.h"
 
+#include <utility>
+
 class DeleteCommand: public Command {
 
 public:
 
-    DeleteCommand(std::string key): _key(key) {}
+    explicit DeleteCommand(std::string key): _key(std::move(key)) {}
 
     std::string execute(hash_map_t &data) override {
 

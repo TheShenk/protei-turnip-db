@@ -11,7 +11,7 @@ void TcpServer::startAccept() {
     });
 }
 
-void TcpServer::handleAccept(boost::shared_ptr<TcpConnection> new_connection, const boost::system::error_code &error) {
+void TcpServer::handleAccept(const boost::shared_ptr<TcpConnection>& new_connection, const boost::system::error_code &error) {
     if (!error) {
         BOOST_LOG_TRIVIAL(info) << "Founded new connection";
         new_connection->start();
