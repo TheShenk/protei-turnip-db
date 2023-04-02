@@ -18,6 +18,7 @@
 #include "GetCommand.h"
 #include "PutCommand.h"
 #include "DeleteCommand.h"
+#include "CountCommand.h"
 
 class CommandFactory {
 
@@ -27,7 +28,7 @@ public:
         std::vector<std::string> command_parts;
         boost::split(command_parts, command_data, boost::is_any_of(" "), boost::token_compress_on);
 
-        if (command_parts.size() > 1) {
+        if (command_parts.size() >= 1) {
             if (command_parts[0] == "PUT" && command_parts.size() == 3) {
                 return std::make_unique<PutCommand>(command_parts[1], command_parts[2]);
             } else if (command_parts[0] == "GET" && command_parts.size() == 2) {
@@ -35,7 +36,7 @@ public:
             } else if (command_parts[0] == "DEL" && command_parts.size() == 2) {
                 return std::make_unique<DeleteCommand>(command_parts[1]);
             } else if (command_parts[0] == "COUNT" && command_parts.size() == 1) {
-//                return std::make_unique<CountCommand>()
+                return std::make_unique<CountCommand>();
             }
         }
 

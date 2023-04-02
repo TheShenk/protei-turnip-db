@@ -27,6 +27,7 @@ public:
                 return "NE";
             }
         }
+        return "NE";
     }
 
 private:

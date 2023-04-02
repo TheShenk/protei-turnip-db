@@ -11,7 +11,7 @@ class GetCommand: public Command {
 
 public:
 
-    GetCommand(std::string key): _key(key) {}
+    explicit GetCommand(std::string key): _key(key) {}
 
     std::string execute(hash_map_t &data) override {
 

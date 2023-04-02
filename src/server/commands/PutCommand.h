@@ -16,7 +16,7 @@ public:
     std::string execute(hash_map_t &data_base) override {
         hash_map_t::accessor accessor;
 
-        // insert return true if key don't exist
+        // insert return true if key new
         auto key_exist = !data_base.insert(accessor, _key);
         auto previous_value = accessor->second;
         accessor->second = _value;
