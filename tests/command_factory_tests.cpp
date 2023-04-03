@@ -89,3 +89,13 @@ TEST(CommandFactoryTests, DumpWithoutArgumentsDontExist) {
     auto command = CommandFactory::fromString("dump");
     ASSERT_TRUE(!command.has_value());
 }
+
+TEST(CommandFactoryTests, EmptyStringCommandDontExist) {
+    auto command = CommandFactory::fromString("");
+    ASSERT_TRUE(!command.has_value());
+}
+
+TEST(CommandFactoryTests, SpaceStringCommandDontExist) {
+    auto command = CommandFactory::fromString("  ");
+    ASSERT_TRUE(!command.has_value());
+}
