@@ -7,6 +7,7 @@
 
 #include <string>
 #include <tbb/concurrent_hash_map.h>
+#include <boost/log/trivial.hpp>
 
 using hash_map_t = tbb::concurrent_hash_map<std::string, std::string>;
 

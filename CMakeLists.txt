@@ -28,7 +28,7 @@ if(Boost_FOUND AND TBB_FOUND)
     find_package(GTest)
     include(GoogleTest)
 
-    add_executable(tests tests/database_tests.cpp)
+    add_executable(tests tests/database_tests.cpp tests/command_factory_tests.cpp)
     target_link_libraries(tests
             GTest::GTest GTest::Main
             turnip-lib)
