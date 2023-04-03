@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
 
     auto port = vm["port"].as<int>();
     auto threads_count = vm["threads"].as<int>();
+    auto max_clients_count = vm["max-clients"].as<int>();
 
     DataBase data_base;
     if (vm.count("dump")) {
@@ -40,13 +41,13 @@ int main(int argc, char *argv[]) {
 
     boost::asio::thread_pool pool(threads_count);
     boost::asio::io_context io_context;
-    TcpServer server(io_context, port, data_base);
+
+    BOOST_LOG_TRIVIAL(info) << "TurnipDB started at port " << port << " with " << threads_count << " threads";
+    TcpServer server(io_context, port, max_clients_count, data_base);
 
     for (int i=0; i<threads_count; i++) {
         boost::asio::post(pool, [&io_context](){io_context.run();});
     }
-
-    BOOST_LOG_TRIVIAL(info) << "TurnipDB started at port " << port << " with " << threads_count << " threads";
 
     pool.join();
 

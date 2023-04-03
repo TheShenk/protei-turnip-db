@@ -7,6 +7,8 @@
 
 
 #include <memory>
+#include <iostream>
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/write.hpp>
@@ -16,15 +18,19 @@
 #include <boost/bind/bind.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/log/trivial.hpp>
-#include <iostream>
+#include <utility>
+
 #include "DataBase.h"
+
+using MaxConnectionsLimit = std::shared_ptr<int>;
 
 class TcpConnection: public boost::enable_shared_from_this<TcpConnection> {
 
 public:
-    TcpConnection(boost::asio::io_context& io_context, DataBase &data_base):
+    TcpConnection(boost::asio::io_context& io_context, DataBase &data_base, MaxConnectionsLimit limit):
     _socket(io_context),
-    _data_base(data_base) {}
+    _data_base(data_base),
+    _limit(std::move(limit)){}
 
     ~TcpConnection() {
         BOOST_LOG_TRIVIAL(debug) << "~TcpConnection()";
@@ -36,12 +42,12 @@ public:
 
 private:
     boost::asio::ip::tcp::socket _socket;
-    DataBase &_data_base;
     boost::asio::streambuf command_buffer;
+    DataBase &_data_base;
+    MaxConnectionsLimit _limit;
 
     static void handleWrite(const boost::system::error_code& error,
                             size_t bytes_transferred);
-
 
     void readCommand();
     void writeResult(std::string result);
@@ -50,7 +56,6 @@ private:
                           size_t bytes_transferred);
     void onResultHandler(const boost::system::error_code& error,
                           size_t bytes_transferred);
-//    void sendResult();
 };
 
 
