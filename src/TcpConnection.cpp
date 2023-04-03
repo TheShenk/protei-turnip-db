@@ -37,14 +37,15 @@ void TcpConnection::onCommandHandler(const boost::system::error_code &error, siz
         BOOST_LOG_TRIVIAL(debug) << "Received new command - " << command_data;
         auto command = CommandFactory::fromString(command_data);
 
+        std::string result;
         if (command.has_value()) {
-            auto result = _data_base.runCommand(std::move(command.value()));
-            result += "\n";
-            writeResult(result);
+            result = _data_base.runCommand(std::move(command.value()));
         } else {
+            result = "WC"; // Wrong command
             BOOST_LOG_TRIVIAL(debug) << "Can't parse command: " << command_data;
         }
-
+        result += "\n";
+        writeResult(result);
         readCommand();
     } else {
         BOOST_LOG_TRIVIAL(error) << "Error on receive command: " << error << "-" << error.message();
