@@ -3,8 +3,13 @@
 //
 
 #include <iostream>
+
 #include <boost/program_options.hpp>
 #include <boost/asio.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
+
 #include "TcpServer.h"
 
 int main(int argc, char *argv[]) {
@@ -16,6 +21,7 @@ int main(int argc, char *argv[]) {
             ("port", boost::program_options::value<int>()->default_value(31415), "Port to listen")
             ("threads", boost::program_options::value<int>()->default_value(4), "Threads count to use")
             ("dump", boost::program_options::value<std::string>(), "Path to dump file to load")
+            ("log", boost::program_options::value<boost::log::trivial::severity_level>()->default_value(boost::log::trivial::info), "Minimum level of logs to output")
             ;
 
     boost::program_options::variables_map vm;
@@ -27,6 +33,12 @@ int main(int argc, char *argv[]) {
         std::cout << desc << std::endl;
         return 0;
     }
+
+    auto log_level = vm["log"].as<boost::log::trivial::severity_level>();
+    boost::log::core::get()->set_filter (
+            boost::log::trivial::severity >= log_level
+    );
+
 
     auto port = vm["port"].as<int>();
     auto threads_count = vm["threads"].as<int>();
