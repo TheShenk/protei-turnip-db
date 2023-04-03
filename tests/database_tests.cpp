@@ -106,3 +106,43 @@ TEST_F(DataBaseTests, DeleteReturnOKWhenKeyExist) {
     result = db.runCommand(std::move(*command));
     ASSERT_EQ("OK testvalue", result);
 }
+
+TEST_F(DataBaseTests, GetReturnNEAfterDelete) {
+    auto command = CommandFactory::fromString("put testkey testvalue");
+    ASSERT_TRUE(command.has_value());
+
+    auto result = db.runCommand(std::move(*command));
+    ASSERT_EQ("OK", result);
+
+    command = CommandFactory::fromString("del testkey");
+    ASSERT_TRUE(command.has_value());
+
+    result = db.runCommand(std::move(*command));
+    ASSERT_EQ("OK testvalue", result);
+
+    command = CommandFactory::fromString("get testkey");
+    ASSERT_TRUE(command.has_value());
+
+    result = db.runCommand(std::move(*command));
+    ASSERT_EQ("NE", result);
+}
+
+TEST_F(DataBaseTests, CountDecrementAfterDelete) {
+    auto command = CommandFactory::fromString("put testkey testvalue");
+    ASSERT_TRUE(command.has_value());
+
+    auto result = db.runCommand(std::move(*command));
+    ASSERT_EQ("OK", result);
+
+    command = CommandFactory::fromString("del testkey");
+    ASSERT_TRUE(command.has_value());
+
+    result = db.runCommand(std::move(*command));
+    ASSERT_EQ("OK testvalue", result);
+
+    command = CommandFactory::fromString("count");
+    ASSERT_TRUE(command.has_value());
+
+    result = db.runCommand(std::move(*command));
+    ASSERT_EQ("OK 0", result);
+}
