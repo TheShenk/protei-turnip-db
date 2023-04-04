@@ -8,8 +8,16 @@
 
 #include "Command.h"
 
+/**
+ * Command to get count of keys in database
+ */
 class CountCommand: public Command {
 
+    /**
+     *
+     * @param data_base - reference to database for which need to get keys count
+     * @return "OK <keys count>"
+     */
     std::string execute(hash_map_t &data_base) override {
         auto keys_count = data_base.size();
         return "OK " + std::to_string(keys_count);

@@ -9,11 +9,22 @@
 #include <tbb/concurrent_hash_map.h>
 #include <boost/log/trivial.hpp>
 
+/**
+ * Type of used key-value storage.
+ */
 using hash_map_t = tbb::concurrent_hash_map<std::string, std::string>;
 
+/**
+ * Interface for all commands
+ */
 class Command {
 
 public:
+    /**
+     * Execute command on given database
+     * @param data_base - reference to data_base on which action is to be taken
+     * @return result of command execution - string with status and data if needed
+     */
     virtual std::string execute(hash_map_t &data_base)=0;
 
 };

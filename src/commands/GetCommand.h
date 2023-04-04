@@ -9,16 +9,28 @@
 
 #include <utility>
 
+/**
+ * Command to get value corresponding to given key
+ */
 class GetCommand: public Command {
 
 public:
 
+    /**
+     *
+     * @param key - key for which value is needed
+     */
     explicit GetCommand(std::string key): _key(std::move(key)) {}
 
-    std::string execute(hash_map_t &data) override {
+    /**
+     * Search value for given key in database
+     * @param data_base - reference to database for which need to get keys count
+     * @return "OK <value>" if key exist, "NE" otherwise
+     */
+    std::string execute(hash_map_t &data_base) override {
 
         hash_map_t::const_accessor accessor;
-        auto key_exist = data.find(accessor, _key);
+        auto key_exist = data_base.find(accessor, _key);
         if (key_exist) {
             return "OK " + accessor->second;
         } else {

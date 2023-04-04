@@ -9,12 +9,25 @@
 
 #include <utility>
 
+/**
+ * Command to add value with given key to database
+ */
 class PutCommand: public Command {
 
 public:
 
+    /**
+     *
+     * @param key - key to link with value
+     * @param value - value to save in database
+     */
     PutCommand(std::string key, std::string value): _key(std::move(key)), _value(std::move(value)) {}
 
+    /**
+     * Add given key-value pair in databse
+     * @param data_base - reference to database for which need to get keys count
+     * @return "OK <previous value>" if key already existed, "OK" otherwise
+     */
     std::string execute(hash_map_t &data_base) override {
         hash_map_t::accessor accessor;
 

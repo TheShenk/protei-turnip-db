@@ -33,4 +33,7 @@ if(Boost_FOUND AND TBB_FOUND)
             GTest::GTest GTest::Main
             turnip-lib)
     gtest_discover_tests(tests)
+
+    find_package(Doxygen REQUIRED)
+    doxygen_add_docs(docs ${PROJECT_SOURCE_DIR})
 endif()

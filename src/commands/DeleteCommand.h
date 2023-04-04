@@ -9,12 +9,24 @@
 
 #include <utility>
 
+/**
+ * Command to delete given key and corresponding value from database
+ */
 class DeleteCommand: public Command {
 
 public:
 
+    /**
+     *
+     * @param key - key to delete from database
+     */
     explicit DeleteCommand(std::string key): _key(std::move(key)) {}
 
+    /**
+     * Delete keyy from given database
+     * @param data - reference to database for which need to delete key
+     * @return "OK <previous value" if operation successful, "NE" otherwise
+     */
     std::string execute(hash_map_t &data) override {
 
         hash_map_t::accessor accessor;

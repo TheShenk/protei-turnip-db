@@ -25,6 +25,12 @@
 class CommandFactory {
 
 public:
+
+    /**
+     * Create command-object from string representation
+     * @param command_data - string representation of command. Supported: put, get, del, count, dump
+     * @return Command is returned if given string valid, otherwise nullopt
+     */
     static std::optional<std::unique_ptr<Command>> fromString(std::string command_data) {
         boost::trim(command_data);
         std::vector<std::string> command_parts;

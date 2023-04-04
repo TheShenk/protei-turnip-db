@@ -9,11 +9,23 @@
 #include <fstream>
 #include "Command.h"
 
+/**
+ * Command to write data from database to specific file
+ */
 class DumpCommand: public Command{
 
 public:
-    DumpCommand(std::string filename): _filename(std::move(filename)) {}
+    /**
+     *
+     * @param filename - name of file to save data
+     */
+    explicit DumpCommand(std::string filename): _filename(std::move(filename)) {}
 
+    /**
+     * Saving data from database in file
+     * @param data_base reference to database for which need to save data
+     * @return "OK" if operation successful, "NF" if can't open file
+     */
     std::string execute(hash_map_t &data_base) override {
         std::ofstream ofstream(_filename);
         if (!ofstream.is_open()) {
