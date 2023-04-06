@@ -51,16 +51,16 @@ int main(int argc, char *argv[]) {
         data_base.load(filepath);
     }
 
-    boost::asio::thread_pool pool(threads_count);
-    boost::asio::io_context io_context;
+    boost::asio::thread_pool io_context(threads_count);
 
     BOOST_LOG_TRIVIAL(info) << "TurnipDB started at port " << port << " with " << threads_count << " threads";
     TcpServer server(io_context, port, max_clients_count, data_base);
 
-    for (int i=0; i<threads_count; i++) {
-        boost::asio::post(pool, [&io_context](){io_context.run();});
-    }
+    boost::asio::co_spawn(io_context, server.startAccept(), boost::asio::detached);
 
-    pool.join();
+    boost::asio::signal_set signals(io_context, SIGINT, SIGTERM);
+    signals.async_wait([&io_context](auto, auto){ io_context.stop(); });
+
+    io_context.join();
 
 }

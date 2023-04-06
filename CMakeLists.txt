@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 project(protei-turnip-db)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 
 
@@ -9,8 +9,8 @@ find_package(Boost 1.81 REQUIRED system program_options log)
 find_package(TBB REQUIRED)
 if(Boost_FOUND AND TBB_FOUND)
     add_library(turnip-lib
-            src/TcpServer.h src/TcpServer.cpp
-            src/TcpConnection.h src/TcpConnection.cpp
+            src/TcpServer.h
+            src/TcpConnection.h
             src/DataBase.h src/DataBase.cpp
             src/commands/Command.h src/commands/CommandFactory.h
             src/commands/PutCommand.h src/commands/GetCommand.h
