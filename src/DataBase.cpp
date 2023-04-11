@@ -8,19 +8,23 @@ std::string DataBase::runCommand(std::unique_ptr<Command> command) {
     return command->execute(_data);
 }
 
-void DataBase::load(std::string filepath) {
+void DataBase::load(const std::string &filepath) {
     std::ifstream ifstream(filepath);
     if (!ifstream.is_open()) {
         BOOST_LOG_TRIVIAL(error) << "Can't open dump file";
         return;
     }
 
+    load(ifstream);
+}
+
+void DataBase::load(std::istream &stream) {
     hash_map_t::accessor accessor;
-    while (!ifstream.eof()) {
+    while (!stream.eof()) {
         std::string key;
         std::string value;
 
-        ifstream >> key >> value;
+        stream >> key >> value;
 
         // Last line of dump file is empty
         if (!key.empty() && !value.empty()) {

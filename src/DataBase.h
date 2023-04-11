@@ -26,7 +26,13 @@ public:
      * Load database content from file
      * @param filepath - path to file from which load data
      */
-    void load(std::string filepath);
+    void load(const std::string &filepath);
+
+    /**
+     * Load database content from given stream. Used for testing.
+     * @param stream - stream from which data is read
+     */
+    void load(std::istream &stream);
 
 private:
 
