@@ -20,4 +20,4 @@ WORKDIR build
 RUN cmake ../ && cmake --build .
 RUN ./tests
 
-CMD ["./turnip-server"]
+ENTRYPOINT ["./turnip-server"]
