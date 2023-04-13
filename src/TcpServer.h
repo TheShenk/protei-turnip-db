@@ -62,7 +62,7 @@ public:
                 if (_limit.use_count() < _max_connections_count) {
                     boost::asio::co_spawn(_context, connection->start(), boost::asio::detached);
                 } else {
-                    BOOST_LOG_TRIVIAL(info) << "Connection refused due to reaching the limit";
+                    BOOST_LOG_TRIVIAL(info) << "Connection refused due to reach the limit";
                 }
             } else {
                 BOOST_LOG_TRIVIAL(error) << error << "-" << error.message();

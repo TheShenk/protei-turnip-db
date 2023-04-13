@@ -23,7 +23,7 @@ public:
     explicit DeleteCommand(std::string key): _key(std::move(key)) {}
 
     /**
-     * Delete keyy from given database
+     * Delete key from given database
      * @param data - reference to database for which need to delete key
      * @return "OK <previous value" if operation successful, "NE" otherwise
      */

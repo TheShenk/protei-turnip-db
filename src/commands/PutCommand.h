@@ -24,7 +24,7 @@ public:
     PutCommand(std::string key, std::string value): _key(std::move(key)), _value(std::move(value)) {}
 
     /**
-     * Add given key-value pair in databse
+     * Add given key-value pair in database
      * @param data_base - reference to database for which need to get keys count
      * @return "OK <previous value>" if key already existed, "OK" otherwise
      */
