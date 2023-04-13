@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 include(CMakeFindDependencyMacro)
 include(FetchContent)
 
-find_package(Boost 1.81 REQUIRED system program_options log)
-find_package(TBB REQUIRED)
+find_package(Boost 1.76 COMPONENTS system program_options log)
+find_package(TBB)
 if(Boost_FOUND AND TBB_FOUND)
 
     set(SRC src/TcpServer.h
@@ -38,6 +38,9 @@ if(Boost_FOUND AND TBB_FOUND)
     include(GoogleTest)
     gtest_discover_tests(tests)
 
-    find_package(Doxygen REQUIRED)
+endif()
+
+find_package(Doxygen)
+if (Doxygen_FOUND)
     doxygen_add_docs(docs ${PROJECT_SOURCE_DIR})
 endif()
