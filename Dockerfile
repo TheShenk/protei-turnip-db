@@ -8,15 +8,16 @@ RUN apt update && apt install -y \
     libboost-program-options1.81-dev \
     libboost-log1.81-dev \
     libasio-dev \
-    libtbb-dev \
-    doxygen
+    libtbb-dev
 
-RUN git clone https://github.com/TheShenk/protei-turnip-db.git
-WORKDIR protei-turnip-db
+ADD src src
+ADD tests tests
+ADD CMakeLists.txt CMakeLists.txt
 
 RUN mkdir build
 
 WORKDIR build
 RUN cmake ../ && cmake --build .
+RUN ./tests
 
 CMD ["./turnip-server"]
